@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyRuns1</string>
+
+    <!-- Change this to whatever the course website will be -->
+    <string name="profile_photo_file_name">profile_photo.png</string>
+    <string name="dialog_fragment_tag_photo_picker">dialog_fragment_photo_picker</string>
+    <string name="ui_profile_toast_save_text">Profile saved</string>
+    <string name="ui_profile_toast_cancel_text">Change canceled</string>
+    <string name="ui_button_save_title">Save</string>
+    <string name="ui_button_change_title">Change</string>
+    <string name="ui_settings_profile_title">User Profile</string>
+    <string name="ui_settings_profile_summary">Names, Email, Class, etc</string>
+    <string name="ui_profile_photo_title">Profile photo:</string>
+    <string name="ui_profile_photo_content_description">Your profile photo:</string>
+    <string name="ui_profile_photo_picker_title">"Select profile image"</string>
+
+    <string-array name="ui_profile_photo_picker_items">
+        <item>Take picture from camera</item>
+    </string-array>
+
+    <!-- Pengze Liu Added 1/8/2020 -->
+    <string name="ui_profile_photo_text">Profile Photo</string>
+    <string name="ui_name_text">Name</string>
+    <string name="ui_name_input">Your Name</string>
+    <string name="ui_email_text">Email</string>
+    <string name="ui_email_input">Your Email</string>
+    <string name="ui_phone_text">Phone</string>
+    <string name="ui_phone_input">Your Phone Number</string>
+    <string name="ui_gender_text">Gender</string>
+    <string name="ui_gender_female">Female</string>
+    <string name="ui_gender_male">Male</string>
+    <string name="ui_class_text">Class</string>
+    <string name="ui_class_input">eg. 2012</string>
+    <string name="ui_major_text">Major</string>
+    <string name="ui_major_input">Your Major</string>
+    <string name="ui_button_save">Save</string>
+    <string name="ui_button_cancel">Cancel</string>
+
+</resources>

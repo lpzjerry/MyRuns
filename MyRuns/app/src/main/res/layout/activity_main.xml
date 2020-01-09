@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <!-- ProfilePhoto -->
+        <TextView
+            android:id="@+id/profile_photo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_profile_photo_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" >
+
+            <ImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/ui_profile_photo_content_description"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+
+                <requestFocus />
+            </ImageView>
+
+            <Button
+                android:id="@+id/btnChangePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:onClick="onChangePhotoClicked"
+                android:text="@string/ui_button_change_title" >
+            </Button>
+        </LinearLayout>
+
+        <!-- Name -->
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_name_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/ui_name_input" />
+
+        <!-- Email -->
+        <TextView
+            android:id="@+id/email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_email_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/ui_email_input" />
+
+        <!-- Phone -->
+        <TextView
+            android:id="@+id/phone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_phone_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/phone_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="@string/ui_phone_input" />
+
+        <!-- Gender -->
+        <TextView
+            android:id="@+id/gender_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_gender_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_gender_female" />
+            <RadioButton android:id="@+id/radio_male"
+                android:layout_marginStart="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_gender_male" />
+        </RadioGroup>
+
+        <!-- Class -->
+        <TextView
+            android:id="@+id/class_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_class_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/class_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/ui_class_input" />
+
+        <!-- Major -->
+        <TextView
+            android:id="@+id/major_text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/ui_major_text"
+            android:textColor="#666"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/major_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/ui_major_input" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <Button style="android:attr.buttonBarButtonStyle"
+                android:id="@+id/button1"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_button_save"
+                android:onClick="onSaveClick" />
+
+            <Button style="android:attr.buttonBarButtonStyle"
+                android:id="@+id/button2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_button_cancel"
+                android:onClick="onCancelClick" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
