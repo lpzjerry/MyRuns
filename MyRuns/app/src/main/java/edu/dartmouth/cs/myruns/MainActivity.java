@@ -8,6 +8,7 @@ import android.view.View;
 import android.content.Context;
 import android.widget.EditText;
 import android.app.ActionBar;
+import android.widget.RadioButton;
 import androidx.appcompat.widget.Toolbar;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        // TODO Cache information into input box.
+    protected void onStart() {
+        super.onStart();
         Context context = getApplicationContext();
         // Name
         String userdata_name = readFromFile("userdata_name.txt", context);
@@ -54,6 +54,18 @@ public class MainActivity extends AppCompatActivity {
         String userdata_major = readFromFile("userdata_major.txt", context);
         EditText editMajor = (EditText) findViewById(R.id.major_input);
         editMajor.setText(userdata_major);
+        // Gender
+        String userdata_gender = readFromFile("userdata_gender.txt", context);
+        RadioButton radio_female = (RadioButton) findViewById(R.id.radio_female);
+        RadioButton radio_male = (RadioButton) findViewById(R.id.radio_male);
+        if (userdata_gender.equals("Female")) {
+            radio_female.setChecked(true);
+            radio_male.setChecked(false);
+        }
+        else if (userdata_gender.equals("Male")) {
+            radio_female.setChecked(false);
+            radio_male.setChecked(true);
+        }
     }
 
     @Override
@@ -84,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         String strPhone = textPhone.getText().toString();
         Log.d(TAG, strPhone);
         writeToFile("userdata_phone.txt", strPhone, context);
-        // TODO: Gender
         // Class
         EditText textClass = (EditText) findViewById(R.id.class_input);
         String strClass = textClass.getText().toString();
@@ -95,6 +106,17 @@ public class MainActivity extends AppCompatActivity {
         String strMajor = textMajor.getText().toString();
         Log.d(TAG, strMajor);
         writeToFile("userdata_major.txt", strMajor, context);
+        // TODO: Gender
+        String strGender = "";
+        RadioButton radio_female = (RadioButton) findViewById(R.id.radio_female);
+        RadioButton radio_male = (RadioButton) findViewById(R.id.radio_male);
+        if (radio_female.isChecked()) {
+            strGender = "Female";
+        }
+        else if (radio_male.isChecked()) {
+            strGender = "Male";
+        }
+        writeToFile("userdata_gender.txt", strGender, context);
         MainActivity.this.finish();
     }
 
