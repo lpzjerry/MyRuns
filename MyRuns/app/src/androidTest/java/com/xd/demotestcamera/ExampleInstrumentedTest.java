@@ -1,4 +1,4 @@
-package edu.dartmouth.cs.myruns;
+package com.xd.demotestcamera;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("edu.dartmouth.cs.myruns", appContext.getPackageName());
+        assertEquals("com.xd.demotestcamera", appContext.getPackageName());
     }
 }

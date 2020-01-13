@@ -1,4 +1,4 @@
-package edu.dartmouth.cs.myruns;
+package com.xd.demotestcamera;
 
 import org.junit.Test;
 
