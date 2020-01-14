@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String line = "...";//
     TextView textView;
     public static final String TEXTVIEW_KEY = "textview_key";
+    public static final String IMAGEVIEW_KEY = "imageview_key";
     public static final String TAG = "DEBUG";
 
     @Override
@@ -42,11 +43,26 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text_view);
         imageView = (ImageView) findViewById(R.id.imageProfile);
         loadUserData();
+        if (savedInstanceState != null) {
+            photo_id = savedInstanceState.getInt(IMAGEVIEW_KEY);
+            File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());//XD: try Environment.DIRECTORY_PICTURES instead of "null"
+            if (tempImgFile.exists()) {
+                tempImgUri = FileProvider.getUriForFile(this, "com.xd.demotestcamera", tempImgFile);
+                imageView.setImageURI(tempImgUri);
+                line = tempImgUri.getPath();
+            }
+            else {
+                // imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.default_profile, null));
+                line = "...";
+                tempImgUri = null;
+            }
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
+        outState.putInt(IMAGEVIEW_KEY, photo_id);
         outState.putString(TEXTVIEW_KEY, line);
     }
     @Override
