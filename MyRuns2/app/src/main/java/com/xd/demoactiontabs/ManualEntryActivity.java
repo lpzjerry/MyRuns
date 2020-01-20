@@ -1,8 +1,9 @@
 package com.xd.demoactiontabs;
 
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-
+import android.app.DialogFragment;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -63,11 +64,31 @@ public class ManualEntryActivity extends ListActivity {
                     new TimePickerDialog(ManualEntryActivity.this, mTimeListener,
                             mDateAndTime.get(Calendar.HOUR_OF_DAY),
                             mDateAndTime.get(Calendar.MINUTE), true).show();
-                } else if (listViewText.equals("Comment")) {
-                    // TODO: comment
                 } else {
                     // TODO: add dialogGeneral
-
+                    DialogGeneral myDialog = new DialogGeneral();
+                    Bundle bundle = new Bundle();
+                    int titleId;
+                    switch (listViewText) {
+                        case "Duration":
+                            titleId = 0;
+                            break;
+                        case "Distance":
+                            titleId = 1;
+                            break;
+                        case "Calories":
+                            titleId = 2;
+                            break;
+                        case "Heart Rate":
+                            titleId = 3;
+                            break;
+                        default:
+                            titleId = 4;
+                            break;
+                    }
+                    bundle.putInt(DialogGeneral.DIALOG_KEY, titleId);
+                    myDialog.setArguments(bundle);
+                    myDialog.show(getFragmentManager(),"my dialog");
                 }
             }
         };
@@ -75,13 +96,6 @@ public class ManualEntryActivity extends ListActivity {
         listView.setOnItemClickListener(mListener);
     }
 
-    private void onItemClick(View view){
-        DialogGeneral myDialog = new DialogGeneral();
-        Bundle bundle = new Bundle();
-        bundle.putInt(DialogGeneral.DIALOG_KEY, DialogGeneral.TEST_DIALOG);
-        myDialog.setArguments(bundle);
-        // myDialog.show(fragmentManager,"my dialog");
-    }
     public void onClickButtonCancel(View view) {
         ManualEntryActivity.this.finish();
     }

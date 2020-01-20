@@ -1,31 +1,43 @@
 package com.xd.demoactiontabs;
 
-import androidx.fragment.app.DialogFragment;
+//import androidx.fragment.app.DialogFragment;
+import android.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import androidx.fragment.app.Fragment;
-
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class DialogGeneral extends DialogFragment implements DialogInterface.OnClickListener {
     public static final String DIALOG_KEY = "dialog";
-    public static final int CAMERA_DIALOG = 0;
-    public static final int TEST_DIALOG = 1;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         Dialog ret = null;
         Bundle bundle = getArguments();
         int dialogId = bundle.getInt(DIALOG_KEY);
-        if(dialogId == TEST_DIALOG) {
+        if(true) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_general, null);
             builder.setView(view);
-            builder.setTitle("my title");
+            if (dialogId == 0) {
+                builder.setTitle("Duration");
+            } else if (dialogId == 1) {
+                builder.setTitle("Distance");
+            } else if (dialogId == 2) {
+                builder.setTitle("Calories");
+            } else if (dialogId == 3) {
+                builder.setTitle("Heart Rate");
+            } else {
+                // TODO Comments
+                builder.setTitle("Comment");
+                EditText edt = (EditText) view.findViewById(R.id.editText);
+                edt.setHint("How did it go? Notes here.");
+            }
             builder.setPositiveButton("ok", this);
             builder.setNegativeButton("cancel", this);
             ret = builder.create();
