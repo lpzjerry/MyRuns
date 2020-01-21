@@ -37,27 +37,17 @@ public class ProfileActivity extends AppCompatActivity {
     public static final String IMAGEVIEW_KEY = "imageview_key";
     public static final String TAG = "DEBUG";
 
-    private static void checkPermissions(Activity activity){
-        if(Build.VERSION.SDK_INT < 23)
-            return;
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0);
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        checkPermissions(this);
         textView = (TextView) findViewById(R.id.text_view);
         imageView = (ImageView) findViewById(R.id.imageProfile);
         loadUserData();
         if (savedInstanceState != null) {
             photo_id = savedInstanceState.getInt(IMAGEVIEW_KEY);
-            File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());//XD: try Environment.DIRECTORY_PICTURES instead of "null"
+            File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());
             if (tempImgFile.exists()) {
                 tempImgUri = FileProvider.getUriForFile(this, "com.xd.demoactiontabs", tempImgFile);
                 imageView.setImageURI(tempImgUri);
@@ -85,7 +75,9 @@ public class ProfileActivity extends AppCompatActivity {
     public void onChangePhotoClicked(View view) {
         this.photo_id += 1;
         File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());
+        Log.d("TAG-DEBUG-0", (String) tempImgFile.getAbsolutePath());
         tempImgUri = FileProvider.getUriForFile(this, "com.xd.demoactiontabs", tempImgFile);
+        Log.d("TAG-DEBUG-1", (String) tempImgUri.toString());
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
