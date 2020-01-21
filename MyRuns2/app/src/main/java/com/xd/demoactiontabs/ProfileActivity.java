@@ -28,10 +28,8 @@ import com.soundcloud.android.crop.Crop;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final int CAMERA_REQUEST_CODE = 1;
-    public static final String TEXT_VIEW_TEXT_KEY = "text key";
     private Uri tempImgUri;
     private ImageView imageView;
-    // private String tempImgFileName = "xd_temp_img.jpg";
     private int photo_id = 0;
     String line = "...";//
     TextView textView;
@@ -61,12 +59,11 @@ public class ProfileActivity extends AppCompatActivity {
             photo_id = savedInstanceState.getInt(IMAGEVIEW_KEY);
             File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());//XD: try Environment.DIRECTORY_PICTURES instead of "null"
             if (tempImgFile.exists()) {
-                tempImgUri = FileProvider.getUriForFile(this, "com.xd.demotestcamera", tempImgFile);
+                tempImgUri = FileProvider.getUriForFile(this, "com.xd.demoactiontabs", tempImgFile);
                 imageView.setImageURI(tempImgUri);
                 line = tempImgUri.getPath();
             }
             else {
-                // imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.default_profile, null));
                 line = "...";
                 tempImgUri = null;
             }
@@ -88,7 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void onChangePhotoClicked(View view) {
         this.photo_id += 1;
         File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());
-        tempImgUri = FileProvider.getUriForFile(this, "com.xd.demotestcamera", tempImgFile);
+        tempImgUri = FileProvider.getUriForFile(this, "com.xd.demoactiontabs", tempImgFile);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, tempImgUri);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
@@ -96,21 +93,15 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //#5
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) return;
-
-        //#4
         if (requestCode == CAMERA_REQUEST_CODE) {
-            //#6
             Crop.of(tempImgUri, tempImgUri).asSquare().start(this);
-            //~~~~ run the code ~~~~
-        } else if (requestCode == Crop.REQUEST_CROP) {//#7
+        } else if (requestCode == Crop.REQUEST_CROP) {
             Uri selectedImgUri = Crop.getOutput(data);
             imageView.setImageURI(null);
             imageView.setImageURI(selectedImgUri);
             line = tempImgUri.getPath();
-            // textView.setText(line);
         }
         Log.d(TAG, "RETURN: onActivityResult()");
     }
@@ -125,7 +116,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
-        Log.d(TAG, "loadUserData()");
         String mKey = getString(R.string.preference_name);
         SharedPreferences mPrefs = getSharedPreferences(mKey, MODE_PRIVATE);
 
@@ -163,14 +153,13 @@ public class ProfileActivity extends AppCompatActivity {
         // Photo
         mKey = "profile_photo";
         photo_id = mPrefs.getInt(mKey, 0);
-        File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());//XD: try Environment.DIRECTORY_PICTURES instead of "null"
+        File tempImgFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), getTempImgFileName());
         if (tempImgFile.exists()) {
-            tempImgUri = FileProvider.getUriForFile(this, "com.xd.demotestcamera", tempImgFile);
+            tempImgUri = FileProvider.getUriForFile(this, "com.xd.demoactiontabs", tempImgFile);
             imageView.setImageURI(tempImgUri);
             line = tempImgUri.getPath();
         }
         else {
-            // imageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.default_profile, null));
             line = "...";
             tempImgUri = null;
         }

@@ -11,24 +11,4 @@
         android:ems="10"
         android:inputType="number" />
 
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/dialog_button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/dialog_button_ok"
-            android:text="@string/ui_button_cancel" />
-        <Button
-            android:id="@+id/dialog_button_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="@string/ui_button_ok" />
-    </RelativeLayout>-->
-
-
 </LinearLayout>

@@ -1,30 +1,22 @@
 package com.xd.demoactiontabs;
 
-import androidx.appcompat.app.AppCompatActivity;
-//import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import android.app.DialogFragment;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.text.format.DateUtils;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 
 public class ManualEntryActivity extends ListActivity {
     Calendar mDateAndTime = Calendar.getInstance();
-    // FragmentManager fragmentManager = getSupportFragmentManager();
 
     static final String[] inputMethod = new String[] {
             "Date", "Time", "Duration", "Distance", "Calories", "Heart Rate", "Comment"};
@@ -65,7 +57,6 @@ public class ManualEntryActivity extends ListActivity {
                             mDateAndTime.get(Calendar.HOUR_OF_DAY),
                             mDateAndTime.get(Calendar.MINUTE), true).show();
                 } else {
-                    // TODO: add dialogGeneral
                     DialogGeneral myDialog = new DialogGeneral();
                     Bundle bundle = new Bundle();
                     int titleId;
