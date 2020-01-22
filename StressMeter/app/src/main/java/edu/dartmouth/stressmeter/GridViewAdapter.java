@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.GridView;
 import android.widget.BaseAdapter;
 
 /* reference:
@@ -15,26 +14,32 @@ import android.widget.BaseAdapter;
 
 public class GridViewAdapter extends BaseAdapter {
     // Keep all Images in array
-    public int[] mThumbIds = PSM.getGrid1();
+    public int[] mGridImages;
     private Context mContext;
-    // our ViewHolder.
+
     static class ViewHolderItem {
         ImageView imageViewItem;
     }
 
-    // Constructor
-    public GridViewAdapter(Context c){
+    public GridViewAdapter(Context c, int gridImgID){
         mContext = c;
+        if (gridImgID == 0) {
+            mGridImages = PSM.getGrid1();
+        } else if (gridImgID == 1) {
+            mGridImages = PSM.getGrid2();
+        } else if (gridImgID == 2) {
+            mGridImages = PSM.getGrid3();
+        }
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return mGridImages.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds[position];
+        return mGridImages[position];
     }
 
     @Override
@@ -46,21 +51,15 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
         if (convertView == null) {
-            // inflate the layout
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             convertView = inflater.inflate(R.layout.grid_item, parent, false);
-            // well set up the ViewHolder
             viewHolder = new ViewHolderItem();
             viewHolder.imageViewItem = (ImageView) convertView.findViewById(R.id.imageView);
-            // store the holder with the view.
             convertView.setTag(viewHolder);
         } else {
-            // we've just avoided calling findViewById() on resource everytime
-            // just use the viewHolder
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
-        // object item based on the position
-        viewHolder.imageViewItem.setImageResource(mThumbIds[position]);
+        viewHolder.imageViewItem.setImageResource(mGridImages[position]);
         return convertView;
     }
 }

@@ -17,14 +17,19 @@ import edu.dartmouth.stressmeter.PSM;
 import edu.dartmouth.stressmeter.R;
 
 public class HomeFragment extends Fragment {
+    public static int gridImgID = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        // TODO feed images to grids
         GridView gridView = root.findViewById(R.id.grid_view);
-        GridViewAdapter gridViewAdapter = new GridViewAdapter(root.getContext());
+        GridViewAdapter gridViewAdapter = new GridViewAdapter(root.getContext(), gridImgID);
         gridView.setAdapter(gridViewAdapter);
         return root;
+    }
+
+    public static void updateGridImgID() {
+        gridImgID++;
+        gridImgID %= 3;
     }
 }

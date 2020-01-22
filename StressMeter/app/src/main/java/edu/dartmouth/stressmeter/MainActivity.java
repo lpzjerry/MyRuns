@@ -1,7 +1,9 @@
 package edu.dartmouth.stressmeter;
 
 import android.os.Bundle;
-import android.view.View;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -10,7 +12,13 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Menu;
+import android.widget.GridView;
+
+import edu.dartmouth.stressmeter.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMoreImages(View view) {
-        // TODO replace grid_view with new group of images
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        HomeFragment.updateGridImgID();
+        // Reference: https://developer.android.com/training/basics/fragments/fragment-ui
+        HomeFragment newFragment = new HomeFragment();
+        Bundle args = new Bundle();
+        newFragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
