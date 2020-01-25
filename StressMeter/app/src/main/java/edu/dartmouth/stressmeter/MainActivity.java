@@ -12,6 +12,8 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +36,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
-                R.id.nav_tools)
-                .setDrawerLayout(drawer)
-                .build();
+        mAppBarConfiguration =
+                new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_tools).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -58,15 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMoreImages(View view) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        GridView gridView = (GridView) findViewById(R.id.grid_view);
         HomeFragment.updateGridImgID();
-        // Reference: https://developer.android.com/training/basics/fragments/fragment-ui
-        HomeFragment newFragment = new HomeFragment();
-        Bundle args = new Bundle();
-        newFragment.setArguments(args);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        gridView.setAdapter(new GridViewAdapter(this, HomeFragment.getGridImgID()));
     }
 }

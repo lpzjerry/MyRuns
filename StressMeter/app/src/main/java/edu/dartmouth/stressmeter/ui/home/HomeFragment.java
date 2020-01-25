@@ -17,7 +17,7 @@ import edu.dartmouth.stressmeter.PSM;
 import edu.dartmouth.stressmeter.R;
 
 public class HomeFragment extends Fragment {
-    public static int gridImgID = 0;
+    private static int gridImgID = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,4 +32,6 @@ public class HomeFragment extends Fragment {
         gridImgID++;
         gridImgID %= 3;
     }
+
+    public static int getGridImgID() { return gridImgID; }
 }
