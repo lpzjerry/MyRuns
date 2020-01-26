@@ -12,4 +12,6 @@
     <string name="caption_summary">Summary of Results</string>
     <string name="caption_gridview">Touch the image that best captures how stressed you feel right now</string>
     <string name="more_images">More Images</string>
+    <string name="ui_button_cancel">Cancel</string>
+    <string name="ui_button_submit">Submit</string>
 </resources>
