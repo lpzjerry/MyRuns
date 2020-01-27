@@ -36,37 +36,39 @@ public class ToolsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
         TextView textView = root.findViewById(R.id.csv_display);
         AssetManager am = getActivity().getAssets();
-        csvContent = readFromFile(getContext());
-        Log.d("pengze", csvContent);
-        textView.setText(csvContent);
-
-        // TODO Edit Chart
-        LineChartView chart = (LineChartView) root.findViewById(R.id.chart);
-        ArrayList<PointValue> values = new ArrayList<>();
-        String[] dataPoints = csvContent.split("\n");
-        ArrayList<AxisValue> axisXValues = new ArrayList<AxisValue>();
-        ArrayList<AxisValue> axisYValues = new ArrayList<AxisValue>();
-        for (int i = 0; i < 16; i++) {
-            axisYValues.add(new AxisValue(i));
+        try {
+            csvContent = readFromFile(getContext());
+            textView.setText(csvContent);
+            // TODO Edit Chart
+            LineChartView chart = (LineChartView) root.findViewById(R.id.chart);
+            ArrayList<PointValue> values = new ArrayList<>();
+            String[] dataPoints = csvContent.split("\n");
+            ArrayList<AxisValue> axisXValues = new ArrayList<AxisValue>();
+            ArrayList<AxisValue> axisYValues = new ArrayList<AxisValue>();
+            for (int i = 0; i < 16; i++) {
+                axisYValues.add(new AxisValue(i));
+            }
+            int cnt = 0;
+            for (String point : dataPoints) {
+                int pressure = Integer.parseInt(point.split(",")[1]);
+                values.add(new PointValue(cnt, pressure));
+                axisXValues.add(new AxisValue(cnt));
+                cnt++;
+            }
+            //In most cased you can call data model methods in builder-pattern-like manner.
+            Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
+            ArrayList<Line> lines = new ArrayList<Line>();
+            lines.add(line);
+            LineChartData data = new LineChartData();
+            data.setLines(lines);
+            Axis axisX = new Axis(axisXValues);
+            Axis axisY = new Axis(axisYValues);
+            data.setAxisXBottom(axisX);
+            data.setAxisYLeft(axisY);
+            chart.setLineChartData(data);
+        } catch (Exception e) {
+            Log.d("pengze", "ERROR LOADING CSV: " + e.toString());
         }
-        int cnt = 0;
-        for (String point : dataPoints) {
-            int pressure = Integer.parseInt(point.split(",")[1]);
-            values.add(new PointValue(cnt, pressure));
-            axisXValues.add(new AxisValue(cnt));
-            cnt++;
-        }
-        //In most cased you can call data model methods in builder-pattern-like manner.
-        Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-        ArrayList<Line> lines = new ArrayList<Line>();
-        lines.add(line);
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-        Axis axisX = new Axis(axisXValues);
-        Axis axisY = new Axis(axisYValues);
-        data.setAxisXBottom(axisX);
-        data.setAxisYLeft(axisY);
-        chart.setLineChartData(data);
         return root;
     }
 
