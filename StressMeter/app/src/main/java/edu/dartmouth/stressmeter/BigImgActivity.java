@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.util.Log;
 import android.content.Context;
+import android.content.Intent;
 
 
 import java.io.File;
@@ -49,6 +50,10 @@ public class BigImgActivity extends AppCompatActivity {
         long tsLong = System.currentTimeMillis() / 1000;
         String data = tsLong + "," + position + "\n";
         writeToFile(ret+data, this);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
         BigImgActivity.this.finish();
     }
 
