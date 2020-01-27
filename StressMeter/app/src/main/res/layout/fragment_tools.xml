@@ -55,7 +55,7 @@
         android:background="@color/grey"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:text=""
         android:layout_below="@+id/text_summary_results" />
 

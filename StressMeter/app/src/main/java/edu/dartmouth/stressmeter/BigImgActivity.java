@@ -48,7 +48,7 @@ public class BigImgActivity extends AppCompatActivity {
         String ret = readFromFile(this);
         long tsLong = System.currentTimeMillis() / 1000;
         String data = tsLong + "," + position + "\n";
-        writeToFile(data+ret, this);
+        writeToFile(ret+data, this);
         BigImgActivity.this.finish();
     }
 
