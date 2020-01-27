@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Util.checkPermissions(this);
+        // TODO fire the app
+        PSMScheduler.setSchedule(this);
         // TODO vibrate
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         Log.d("vib", "BEFORE VIBRATE");
