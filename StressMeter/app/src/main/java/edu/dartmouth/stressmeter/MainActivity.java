@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickMoreImages(View view) {
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
         GridView gridView = findViewById(R.id.grid_view);
         HomeFragment.updateGridImgID();
         gridView.setAdapter(new GridViewAdapter(this, HomeFragment.getGridImgID()));
