@@ -10,10 +10,15 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.View;
 import android.view.Menu;
 import android.widget.GridView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 
@@ -22,7 +27,7 @@ import edu.dartmouth.stressmeter.ui.home.HomeFragment;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    Vibrator vibrator; // = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+    Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +36,12 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("EXIT", false)) {
             MainActivity.this.finish();
         }
-
         Util.checkPermissions(this);
-        // TODO fire the app
-        PSMScheduler.setSchedule(this);
-        // TODO vibrate
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        Log.d("vib", "BEFORE VIBRATE");
+        PSMScheduler.setSchedule(this); // Fire the APP
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE); // Vibration
         if (vibrator != null) {
-            vibrator.vibrate(VibrationEffect.createOneShot(5000000, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(1, VibrationEffect.DEFAULT_AMPLITUDE));
         }
-        Log.d("vib", "AFTER VIBRATE");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
