@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         Log.d("vib", "BEFORE VIBRATE");
         if (vibrator != null) {
-            vibrator.vibrate(VibrationEffect.createOneShot(1, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(5000000, VibrationEffect.DEFAULT_AMPLITUDE));
         }
         Log.d("vib", "AFTER VIBRATE");
         Toolbar toolbar = findViewById(R.id.toolbar);
