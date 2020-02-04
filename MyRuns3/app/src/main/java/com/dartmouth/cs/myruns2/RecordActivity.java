@@ -3,6 +3,7 @@ package com.dartmouth.cs.myruns2;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -18,6 +19,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.util.Log;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
 
@@ -31,6 +36,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
             "Heart Rate",
             "Comment"
     };
+    RecordDataSource recordDataSource;
     public static Calendar calendar = Calendar.getInstance();
     public static int mYear, mMonth, mDay, mHour, mMinute;
     public static String mType = "Running", mEditTextBuffer = "";
@@ -43,6 +49,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        recordDataSource = new RecordDataSource(this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mType = bundle.getString("activityType");
@@ -121,7 +128,6 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
             public void onClick(DialogInterface dialog, int which) {
                 // TODO save the data entry
                 mEditTextBuffer = input.getText().toString();
-                Log.d("pengze", title);
                 if (mEditTextBuffer.equals(""))
                     mEditTextBuffer = "0";
                 switch (title) {
@@ -151,7 +157,9 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
 
     public void onSaveButtonClicked(View view) {
         // TODO save to database
-
+        recordDataSource.open();
+        recordDataSource.insert(mType, calendarToString(calendar), mDuration, mDistance, mCalories, mHeartRate);
+        recordDataSource.close();
         finish();
     }
 
@@ -175,7 +183,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     public static String calendarToString(Calendar calendar) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss MMM d yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss MMM d yyyy");
         return format.format(calendar.getTime());
     }
 }
