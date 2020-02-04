@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -46,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(myViewPageAdapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    HistoryFragment historyFragment = (HistoryFragment) fragments.get(1);
+                    historyFragment.updateList();
+                }
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }

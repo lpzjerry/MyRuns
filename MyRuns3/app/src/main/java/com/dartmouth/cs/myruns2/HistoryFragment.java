@@ -26,10 +26,8 @@ public class HistoryFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("pengze", "onResume()");
+    public void updateList() {
+        Log.d("pengze", "updateList()");
         recordDataSource.open();
         records = recordDataSource.getAllRecords();
         recordDataSource.close();
@@ -53,6 +51,13 @@ public class HistoryFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("pengze", "onResume()");
+        updateList();
     }
 
     @Override
