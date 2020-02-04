@@ -16,11 +16,14 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;
     private ActionTabsViewPagerAdaper myViewPageAdapter;
+    public static RecordDataSource recordDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recordDataSource = new RecordDataSource(this);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);

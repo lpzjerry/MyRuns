@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class RecordDataSource {
             MySQLiteOpenHelper.COLUMN_CALORIES, MySQLiteOpenHelper.COLUMN_HEART_RATE};
 
     public RecordDataSource(Context context) {
-        mySQLiteOpenHelper = new MySQLiteOpenHelper(context);
+        mySQLiteOpenHelper = MySQLiteOpenHelper.getInstance(context);
     }
 
     public void open() {
@@ -28,6 +29,7 @@ public class RecordDataSource {
     }
 
     public Record insert(String type, String dateAndTime, int duration, int distance, int calories, int heartRate) {
+        Log.d("pengze", "insert(): " + type + " " + dateAndTime);
         ContentValues value = new ContentValues();
         value.put(MySQLiteOpenHelper.COLUMN_TYPE, type);
         value.put(MySQLiteOpenHelper.COLUMN_DATE, dateAndTime);

@@ -17,6 +17,17 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CALORIES = "calories";
     public static final String COLUMN_HEART_RATE = "heartrate";
 
+    private static MySQLiteOpenHelper instance = null;
+
+    public static MySQLiteOpenHelper getInstance(Context context) {
+        if (instance == null) {
+            Log.d("pengze", "DB initialized");
+            instance = new MySQLiteOpenHelper(context);
+        }
+        Log.d("pengze", "return DB instance");
+        return instance;
+    }
+
     public MySQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

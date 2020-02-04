@@ -36,7 +36,8 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
             "Heart Rate",
             "Comment"
     };
-    RecordDataSource recordDataSource;
+    public MySQLiteOpenHelper sqLiteOpenHelper;
+    public RecordDataSource recordDataSource = MainActivity.recordDataSource;
     public static Calendar calendar = Calendar.getInstance();
     public static int mYear, mMonth, mDay, mHour, mMinute;
     public static String mType = "Running", mEditTextBuffer = "";
@@ -49,7 +50,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        recordDataSource = new RecordDataSource(this);
+        sqLiteOpenHelper = MySQLiteOpenHelper.getInstance(this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mType = bundle.getString("activityType");
@@ -157,6 +158,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
 
     public void onSaveButtonClicked(View view) {
         // TODO save to database
+        Log.d("pengze", "RecordActivity: getWritableDatabase");
         recordDataSource.open();
         recordDataSource.insert(mType, calendarToString(calendar), mDuration, mDistance, mCalories, mHeartRate);
         recordDataSource.close();
