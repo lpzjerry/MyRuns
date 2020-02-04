@@ -1,16 +1,27 @@
 package com.dartmouth.cs.myruns2;
 
 import android.annotation.SuppressLint;
+
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
 
 public class Record {
     private long id;
     private String type = "Running";
     private String dateAndTime = "";
     private int duration = 0;
-    private int distance = 0;
+    private double distance = 0;
     private int calories = 0;
     private int heartRate = 0;
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
     public void setId(long ID) {
         id = ID;
@@ -51,19 +62,20 @@ public class Record {
         return duration + "mins 0secs";
     }
 
-    public void setDistance(int i) {
-        distance = i;
+    public void setDistance(double miles) {
+        distance = miles;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
     public String getDistanceStr() {
         int unit = MainActivity.getUnit();
-        if (unit == MainActivity.UNIT_MILES)
-            return distance + " Miles";
-        return distance * 1.60934 + " Kilometers";
+        if (unit == MainActivity.UNIT_MILES) {
+            return round(distance, 2) + " Miles";
+        }
+        return round(distance * MainActivity.KM_TO_MILES, 2) + " Kilometers";
     }
 
     public void setCalories(int i) {

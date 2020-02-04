@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static String[] unit_type_arr;
     public static final int UNIT_MILES = 0;
     public static final int UNIT_KM = 1;
+    public static final double KM_TO_MILES = 1.61;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -40,7 +40,8 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
     public static Calendar calendar = Calendar.getInstance();
     public static int mYear, mMonth, mDay, mHour, mMinute;
     public static String mType = "Running", mEditTextBuffer = "";
-    public static int mDuration = 0, mDistance = 0, mCalories = 0, mHeartRate = 0;
+    public static int mDuration = 0, mCalories = 0, mHeartRate = 0;
+    public static double mDistance = 0;
     Button BNSave;
     Button BNCancel;
 
@@ -134,7 +135,12 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
                         mDuration = Integer.parseInt(mEditTextBuffer);
                         break;
                     case "Distance":
-                        mDistance = Integer.parseInt(mEditTextBuffer);
+                        int unit = MainActivity.getUnit();
+                        if (unit == MainActivity.UNIT_MILES) {
+                            mDistance = Double.parseDouble(mEditTextBuffer);
+                        } else {
+                            mDistance = Double.parseDouble(mEditTextBuffer) / MainActivity.KM_TO_MILES;
+                        }
                         break;
                     case "Calories":
                         mCalories = Integer.parseInt(mEditTextBuffer);

@@ -21,10 +21,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static MySQLiteOpenHelper getInstance(Context context) {
         if (instance == null) {
-            Log.d("pengze", "DB initialized");
             instance = new MySQLiteOpenHelper(context);
         }
-        Log.d("pengze", "return DB instance");
         return instance;
     }
 
@@ -33,17 +31,15 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase database) {
-        Log.d("pengze", "onCreate() called");
         String sql = "create table "
                 + TABLE_RECORDS + "(" + COLUMN_ID
                 + " integer primary key autoincrement, "
                 + COLUMN_TYPE + " text not null,"
                 + COLUMN_DATE + " text not null,"
                 + COLUMN_DURATION + " integer not null,"
-                + COLUMN_DISTANCE + " integer not null,"
+                + COLUMN_DISTANCE + " double not null,"
                 + COLUMN_CALORIES + " integer not null,"
                 + COLUMN_HEART_RATE + " integer not null);";
-        Log.d("pengze", sql);
         database.execSQL(sql);
     }
 
