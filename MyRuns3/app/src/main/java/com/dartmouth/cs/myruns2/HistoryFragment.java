@@ -8,31 +8,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 
 public class HistoryFragment extends Fragment {
+    private View rootView;
     private ListView listView;
     private ArrayList<Record> records;
     private ArrayAdapter<Record> recordArrayAdapter;
-    private RecordDataSource recordDataSource = new RecordDataSource(getActivity());
+    private RecordDataSource recordDataSource = MainActivity.recordDataSource;
 
     public HistoryFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-        /*recordDataSource.open();
+    public void onResume() {
+        super.onResume();
+        recordDataSource.open();
         records = recordDataSource.getAllRecords();
+        Log.d("pengze", "records.size() "+records.size());
         recordDataSource.close();
         recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
         listView = rootView.findViewById(R.id.history_list);
-        listView.setAdapter(recordArrayAdapter);*/
+        listView.setAdapter(recordArrayAdapter);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_history, container, false);
+        recordDataSource.open();
+        records = recordDataSource.getAllRecords();
+        Log.d("pengze", "records.size() "+records.size());
+        recordDataSource.close();
+        recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
+        listView = rootView.findViewById(R.id.history_list);
+        listView.setAdapter(recordArrayAdapter);
         return rootView;
     }
 }
