@@ -17,10 +17,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.util.Log;
 
 
-public class RecordActivity extends AppCompatActivity {
-    static final String[] ENTRIES = new String[] {
+public class RecordActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+    static final String[] ENTRIES = new String[]{
             "Date",
             "Time",
             "Duration",
@@ -29,7 +30,10 @@ public class RecordActivity extends AppCompatActivity {
             "Heart Rate",
             "Comment"
     };
+    public static Calendar calendar = Calendar.getInstance();
     public static int mYear, mMonth, mDay, mHour, mMinute;
+    public static String mType = "Running", mEditTextBuffer = "";
+    public static int mDuration = 0, mDistance = 0, mCalories = 0, mHeartRate = 0;
     Button BNSave;
     Button BNCancel;
 
@@ -43,12 +47,11 @@ public class RecordActivity extends AppCompatActivity {
 
         LVRecord.setAdapter(arrayAdapter);
 
-        Calendar ca = Calendar.getInstance();
-        mYear = ca.get(Calendar.YEAR);
-        mMonth = ca.get(Calendar.MONTH);
-        mDay = ca.get(Calendar.DAY_OF_MONTH);
-        mHour = ca.get(Calendar.HOUR_OF_DAY);
-        mMinute = ca.get(Calendar.MINUTE);
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth = calendar.get(Calendar.MONTH);
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mHour = calendar.get(Calendar.HOUR_OF_DAY);
+        mMinute = calendar.get(Calendar.MINUTE);
 
         final DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -66,16 +69,19 @@ public class RecordActivity extends AppCompatActivity {
 
         LVRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,long arg3)
-            {
-                //String value = (String)adapter.getItemAtPosition(position);
-                //Log.d("TAG", "test");
-                switch(position) {
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+                switch (position) {
                     case 0:
-                        new DatePickerDialog(RecordActivity.this, onDateSetListener,mYear, mMonth, mDay).show();
+                        new DatePickerDialog(
+                                RecordActivity.this, RecordActivity.this,
+                                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                                calendar.get(Calendar.DAY_OF_MONTH)).show();
                         break;
                     case 1:
-                        new TimePickerDialog(RecordActivity.this, onTimeSetListener, mHour, mMinute, false).show();
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                                RecordActivity.this, RecordActivity.this,
+                            calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                        timePickerDialog.show();
                         break;
                     case 2:
                         InputDialog("Duration", InputType.TYPE_CLASS_NUMBER);
@@ -84,35 +90,49 @@ public class RecordActivity extends AppCompatActivity {
                         InputDialog("Distance", InputType.TYPE_CLASS_NUMBER);
                         break;
                     case 4:
-                        InputDialog("Calories",InputType.TYPE_CLASS_NUMBER);
+                        InputDialog("Calories", InputType.TYPE_CLASS_NUMBER);
                         break;
                     case 5:
-                        InputDialog("Heart Rate",InputType.TYPE_CLASS_NUMBER);
+                        InputDialog("Heart Rate", InputType.TYPE_CLASS_NUMBER);
                         break;
                     case 6:
-                        InputDialog("Comments",InputType.TYPE_CLASS_TEXT);
+                        InputDialog("Comments", InputType.TYPE_CLASS_TEXT);
                         break;
-
                 }
             }
         });
-
         BNSave = findViewById(R.id.BNRecordSave);
         BNCancel = findViewById(R.id.BNRecordCancel);
-
-
     }
 
-    public void InputDialog(String title, int input_type) {
+    public void InputDialog(final String title, int input_type) {
         AlertDialog.Builder builder = new AlertDialog.Builder(RecordActivity.this);
         builder.setTitle(title);
         final EditText input = new EditText(RecordActivity.this);
         input.setInputType(input_type);
         builder.setView(input);
-        builder.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                // TODO save the data entry
+                mEditTextBuffer = input.getText().toString();
+                Log.d("pengze", title);
+                if (mEditTextBuffer.equals(""))
+                    mEditTextBuffer = "0";
+                switch (title) {
+                    case "Duration":
+                        mDuration = Integer.parseInt(mEditTextBuffer);
+                        break;
+                    case "Distance":
+                        mDistance = Integer.parseInt(mEditTextBuffer);
+                        break;
+                    case "Calories":
+                        mCalories = Integer.parseInt(mEditTextBuffer);
+                        break;
+                    case "Heart Rate":
+                        mHeartRate = Integer.parseInt(mEditTextBuffer);
+                        break;
+                }
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -125,10 +145,30 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     public void onSaveButtonClicked(View view) {
-        finish();//temparorily
+        // TODO save to database
+        String s = Integer.toString(mYear) + " " + Integer.toString(mMonth+1) + " " + Integer.toString(mDay)
+                + " " + Integer.toString(mHour) + " " + Integer.toString(mMinute) + " " + Integer.toString(mDuration)
+                + " " + Integer.toString(mDistance) + " " + Integer.toString(mCalories) + " " + Integer.toString(mHeartRate);
+        Log.d("pengze", s);
+        finish();
     }
 
     public void onCancelButtonClicked(View view) {
         finish();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        calendar.set(year, month, dayOfMonth);
+        mYear = year;
+        mMonth = month;
+        mDay = dayOfMonth;
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        calendar.set(mYear, mMonth, mDay, hourOfDay, minute);
+        mHour = hourOfDay;
+        mMinute = minute;
     }
 }
