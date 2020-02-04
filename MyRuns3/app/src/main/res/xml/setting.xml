@@ -1,0 +1,56 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:addStatesFromChildren="false"
+        android:title="@string/account_preferences">
+
+        <PreferenceScreen
+            android:title="@string/name_email_class_etc_user_profile"
+            android:summary="@string/user_profile">
+
+            <intent android:action="android.intent.action.VIEW"
+                android:targetPackage="com.dartmouth.cs.myruns2"
+                android:targetClass="com.dartmouth.cs.myruns2.ProfileActivity" />
+
+        </PreferenceScreen>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="checkbox_preference"
+            android:summary="@string/privacy_setting_text"
+            android:title="@string/privacy_setting" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/additional_settings">
+        <ListPreference
+            android:key="list_preference"
+            android:title="@string/unit_preference"
+            android:summary="@string/unit_preference_text"
+            android:entries="@array/unit_preference_array"
+            android:entryValues="@array/unit_preference_array"
+            android:dialogTitle="@string/unit_preference" />
+
+        <EditTextPreference
+            android:key="edittext_preference"
+            android:title="@string/comments"
+            android:summary="@string/comments_text"
+            android:dialogTitle="@string/comments" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/misc">
+        <PreferenceScreen
+            android:summary="@string/webpage_url"
+            android:title="@string/webpage">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://web.cs.dartmouth.edu/" />
+
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>
