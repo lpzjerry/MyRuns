@@ -41,10 +41,14 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mType = bundle.getString("activityType");
+        }
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ENTRIES);
-
         ListView LVRecord = findViewById(R.id.LVRecord);
-
         LVRecord.setAdapter(arrayAdapter);
 
         mYear = calendar.get(Calendar.YEAR);
@@ -80,7 +84,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
                     case 1:
                         TimePickerDialog timePickerDialog = new TimePickerDialog(
                                 RecordActivity.this, RecordActivity.this,
-                            calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
                         timePickerDialog.show();
                         break;
                     case 2:
@@ -146,10 +150,7 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
 
     public void onSaveButtonClicked(View view) {
         // TODO save to database
-        String s = Integer.toString(mYear) + " " + Integer.toString(mMonth+1) + " " + Integer.toString(mDay)
-                + " " + Integer.toString(mHour) + " " + Integer.toString(mMinute) + " " + Integer.toString(mDuration)
-                + " " + Integer.toString(mDistance) + " " + Integer.toString(mCalories) + " " + Integer.toString(mHeartRate);
-        Log.d("pengze", s);
+
         finish();
     }
 

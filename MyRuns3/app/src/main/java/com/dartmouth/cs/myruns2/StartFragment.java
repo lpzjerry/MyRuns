@@ -20,8 +20,9 @@ import android.widget.Spinner;
  */
 public class StartFragment extends Fragment {
 
-    Button BNStart;
-    boolean start_manual_activity;
+    private Button BNStart;
+    private Spinner activityType;
+    private boolean start_manual_activity;
 
     String TAG;
 
@@ -29,23 +30,23 @@ public class StartFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_start, container, false);
+        View v = inflater.inflate(R.layout.fragment_start, container, false);
         BNStart = v.findViewById(R.id.BNStart);
+        activityType = (Spinner) v.findViewById(R.id.SPActivityType);
 
-        Spinner spinner = (Spinner)v.findViewById(R.id.SPInputType);
+        Spinner spinner = (Spinner) v.findViewById(R.id.SPInputType);
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String input_method = parent.getSelectedItem().toString();
-                Log.d("TAG",input_method);
-                if(input_method.equals("Manual Entry"))
+                Log.d("TAG", input_method);
+                if (input_method.equals("Manual Entry"))
                     start_manual_activity = true;
                 else
                     start_manual_activity = false;
@@ -56,28 +57,22 @@ public class StartFragment extends Fragment {
 
             }
         });
-        BNStart.setOnClickListener(new View.OnClickListener(){
+        BNStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent;
-
-                if(start_manual_activity)
+                if (start_manual_activity) {
+                    String mActivityType = activityType.getSelectedItem().toString();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("activityType", mActivityType);
                     intent = new Intent(getActivity(), RecordActivity.class);
-                else
+                    intent.putExtras(bundle);
+                } else {
                     intent = new Intent(getActivity(), MapActivity.class);
-
+                }
                 startActivity(intent);
             }
         });
-
         return v;
     }
-
-    //public void onStartClicked(View view) {
-     //   Intent intent = new Intent(getActivity(), RecordActivity.class);
-     //   startActivity(intent);
-   // }
-
 }
