@@ -3,6 +3,8 @@ package com.dartmouth.cs.myruns2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.text.InputType;
 import android.util.Log;
@@ -68,5 +70,15 @@ public class DisplayEntryActivity extends AppCompatActivity {
             editText.setEnabled(false);
             editText.setInputType(InputType.TYPE_NULL);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_entry, menu);
+        return true;
+    }
+
+    public void onClickDeleteEntry(MenuItem item) {
+        this.finish();
     }
 }

@@ -68,6 +68,8 @@
     <string name="tv_distance">Distance</string>
     <string name="tv_calories">Calories</string>
     <string name="tv_heart_rate">Heart Rate</string>
+    <string name="action_delete">Delete</string>
+    <string name="menu_item_delete">Delete</string>
 
 
 </resources>
