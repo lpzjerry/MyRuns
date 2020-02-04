@@ -3,10 +3,12 @@ package com.dartmouth.cs.myruns2;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.util.Log;
 
@@ -29,11 +31,27 @@ public class HistoryFragment extends Fragment {
         super.onResume();
         recordDataSource.open();
         records = recordDataSource.getAllRecords();
-        Log.d("pengze", "records.size() "+records.size());
+        Log.d("pengze", "records.size() " + records.size());
         recordDataSource.close();
         recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
         listView = rootView.findViewById(R.id.history_list);
         listView.setAdapter(recordArrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+                Record record = records.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("activityType", record.getType());
+                bundle.putString("dateAndTime", record.getDateAndTime());
+                bundle.putString("duration", record.getDurationStr());
+                bundle.putString("distance", record.getDistanceStr());
+                bundle.putString("calories", record.getCaloriesStr());
+                bundle.putString("heartRate", record.getHeartRateStr());
+                Intent intent = new Intent(getActivity(), DisplayEntryActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -43,7 +61,7 @@ public class HistoryFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_history, container, false);
         recordDataSource.open();
         records = recordDataSource.getAllRecords();
-        Log.d("pengze", "records.size() "+records.size());
+        Log.d("pengze", "records.size() " + records.size());
         recordDataSource.close();
         recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
         listView = rootView.findViewById(R.id.history_list);

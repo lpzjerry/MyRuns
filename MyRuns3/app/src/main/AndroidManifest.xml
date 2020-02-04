@@ -14,9 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity"
-            android:label="Map">
-        </activity>
+        <activity android:name=".DisplayEntryActivity"></activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="Map"></activity>
         <activity android:name=".RecordActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -28,6 +29,7 @@
         <activity android:name=".ProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.PROFILE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

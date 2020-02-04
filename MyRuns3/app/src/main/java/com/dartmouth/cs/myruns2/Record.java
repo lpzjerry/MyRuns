@@ -49,7 +49,7 @@ public class Record {
         if (duration == 0) {
             return "0secs";
         }
-        return Integer.toString(duration) + "mins 0secs";
+        return duration + "mins 0secs";
     }
 
     public void setDistance(int i) {
@@ -61,7 +61,7 @@ public class Record {
     }
 
     public String getDistanceStr() {
-        return Double.toString(distance) + " Miles";
+        return distance + " Miles";
     }
 
     public void setCalories(int i) {
@@ -70,6 +70,10 @@ public class Record {
 
     public int getCalories() {
         return calories;
+    }
+
+    public String getCaloriesStr() {
+        return calories + " cals";
     }
 
     public void setHeartRate(int i) {
@@ -81,8 +85,6 @@ public class Record {
     }
 
     public String getHeartRateStr() {
-        return Integer.toString(heartRate) + " bpm";
+        return heartRate + " bpm";
     }
-
-
 }

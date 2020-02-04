@@ -61,6 +61,13 @@
     <string name="comments">Comments</string>
     <string name="comments_text">Please enter your comments</string>
     <string name="test">test</string>
+    <string name="tv_input_type">Input type</string>
+    <string name="tv_activity_type">Activity Type</string>
+    <string name="tv_date_time">Date and time</string>
+    <string name="tv_duration">Duration</string>
+    <string name="tv_distance">Distance</string>
+    <string name="tv_calories">Calories</string>
+    <string name="tv_heart_rate">Heart Rate</string>
 
 
 </resources>
