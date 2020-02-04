@@ -15,12 +15,14 @@ public class Record {
     private int calories = 0;
     private int heartRate = 0;
 
-    private static double round(double value, int places) {
+    private static String round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
+        if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
+            return Integer.toString((int) value);
+        }
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return Double.toString(bd.doubleValue());
     }
 
     public void setId(long ID) {
