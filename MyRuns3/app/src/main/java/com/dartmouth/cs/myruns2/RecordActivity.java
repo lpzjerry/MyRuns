@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 
 public class RecordActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     static final String[] ENTRIES = new String[]{
@@ -168,8 +169,13 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        calendar.set(mYear, mMonth, mDay, hourOfDay, minute);
+        calendar.set(mYear, mMonth, mDay, hourOfDay, minute, 0);
         mHour = hourOfDay;
         mMinute = minute;
+    }
+
+    public static String calendarToString(Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss MMM d yyyy");
+        return format.format(calendar.getTime());
     }
 }
