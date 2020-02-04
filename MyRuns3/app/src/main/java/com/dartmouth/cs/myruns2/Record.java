@@ -1,7 +1,6 @@
 package com.dartmouth.cs.myruns2;
 
 import android.annotation.SuppressLint;
-
 import java.text.SimpleDateFormat;
 
 public class Record {
@@ -61,7 +60,10 @@ public class Record {
     }
 
     public String getDistanceStr() {
-        return distance + " Miles";
+        int unit = MainActivity.getUnit();
+        if (unit == MainActivity.UNIT_MILES)
+            return distance + " Miles";
+        return distance * 1.60934 + " Kilometers";
     }
 
     public void setCalories(int i) {

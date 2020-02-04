@@ -29,9 +29,9 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("pengze", "onResume()");
         recordDataSource.open();
         records = recordDataSource.getAllRecords();
-        Log.d("pengze", "records.size() " + records.size());
         recordDataSource.close();
         recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
         listView = rootView.findViewById(R.id.history_list);
@@ -56,13 +56,11 @@ public class HistoryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("pengze", "onCreateView() ");
         rootView = inflater.inflate(R.layout.fragment_history, container, false);
         recordDataSource.open();
         records = recordDataSource.getAllRecords();
-        Log.d("pengze", "records.size() " + records.size());
         recordDataSource.close();
         recordArrayAdapter = new RecordArrayAdapter(getActivity(), records);
         listView = rootView.findViewById(R.id.history_list);
