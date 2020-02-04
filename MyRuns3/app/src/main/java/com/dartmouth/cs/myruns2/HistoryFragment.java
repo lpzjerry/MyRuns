@@ -41,6 +41,7 @@ public class HistoryFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
                 Record record = records.get(position);
                 Bundle bundle = new Bundle();
+                bundle.putLong("ID", record.getId());
                 bundle.putString("activityType", record.getType());
                 bundle.putString("dateAndTime", record.getDateAndTime());
                 bundle.putString("duration", record.getDurationStr());

@@ -67,8 +67,7 @@ public class RecordDataSource {
         return comment;
     }
 
-    public void delete(Record record) {
-        long id = record.getId();
+    public void delete(long id) {
         database.delete(MySQLiteOpenHelper.TABLE_RECORDS,
                 MySQLiteOpenHelper.COLUMN_ID + "=" + id, null);
     }

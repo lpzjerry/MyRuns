@@ -12,7 +12,9 @@ import android.util.Log;
 public class DisplayEntryActivity extends AppCompatActivity {
     private String mInputType = "", mActivityType = "", mDateAndTime = "",
             mDuration = "", mDistance = "", mCalories = "", mHeartRate = "";
+    private long id;
 
+    private RecordDataSource recordDataSource = MainActivity.recordDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class DisplayEntryActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            id = bundle.getLong("ID");
+
             mInputType = "Manual Entry";
             EditText editText = (EditText) findViewById(R.id.ETInputType);
             editText.setHint(mInputType);
@@ -79,6 +83,10 @@ public class DisplayEntryActivity extends AppCompatActivity {
     }
 
     public void onClickDeleteEntry(MenuItem item) {
+        // TODO delete the entry
+        recordDataSource.open();
+        recordDataSource.delete(id);
+        recordDataSource.close();
         this.finish();
     }
 }
