@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">MyRuns4</string>
+    <string name="profile_photo">Profile Photo:</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="your_email_here">Your email here</string>
+    <string name="gender">Gender:</string>
+    <string name="your_phone_number_here">Your phone number here</string>
+    <string name="your_name_here">Your name here</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="your_major_here">Your major here</string>
+    <string name="save">SAVE</string>
+    <string name="e_g_2021">e.g.2021</string>
+    <string name="student_class">Class:</string>
+    <string name="major">Major:</string>
+    <string name="cancel">Cancel</string>
+    <string name="change">Change</string>
+
+    <string name="hello_history_fragment">Hello history fragment</string>
+
+    <string name="input_type">Input type: </string>
+    <string name="activity_type">Activity type: </string>
+    <string name="start">START</string>
+    <string name="sync">SYNC</string>
+
+    <string-array name="input_type_array">
+        <item>Manual Entry</item>
+        <item>GPS</item>
+        <item>Automatic</item>
+    </string-array>
+    <string-array name="activity_type_array">
+        <item>Running</item>
+        <item>Walking</item>
+        <item>Standing</item>
+        <item>Cycling</item>
+        <item>Hiking</item>
+        <item>Downhill Skiing</item>
+        <item>Cross-Country Skiing</item>
+        <item>Snowboarding</item>
+        <item>Skating</item>
+        <item>Swimming</item>
+        <item>Mountain Biking</item>
+        <item>Wheelchair</item>
+        <item>Elliptical</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="account_preferences">Account Preferences</string>
+    <string name="additional_settings">Additional Settings</string>
+    <string name="misc">Misc.</string>
+    <string name="name_email_class_etc_user_profile">Name, Email, Class, etc</string>
+    <string name="user_profile">User Profile</string>
+    <string name="privacy_setting">Privacy Setting</string>
+    <string name="privacy_setting_text">Posting your records anonymously</string>
+    <string name="webpage">Webpage</string>
+    <string name="webpage_url">http://web.cs.dartmouth.edu/</string>
+    <string name="unit_preference">Unit Preference</string>
+    <string name="unit_preference_text">Select the units</string>
+    <string name="comments">Comments</string>
+    <string name="comments_text">Please enter your comments</string>
+    <string name="test">test</string>
+    <string name="tv_input_type">Input type</string>
+    <string name="tv_activity_type">Activity Type</string>
+    <string name="tv_date_time">Date and time</string>
+    <string name="tv_duration">Duration</string>
+    <string name="tv_distance">Distance</string>
+    <string name="tv_calories">Calories</string>
+    <string name="tv_heart_rate">Heart Rate</string>
+    <string name="action_delete">Delete</string>
+    <string name="menu_item_delete">Delete</string>
+
+
+</resources>
