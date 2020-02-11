@@ -39,17 +39,24 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import java.util.List;
 import java.util.Locale;
-
-/*
-Ref: https://stackoverflow.com/questions/14478179/background-service-with-location-listener-in-android
- */
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class LocationService extends Service {
 
     public static final String LAT_KEY = "lat_key";
     public static final String LNG_KEY = "lng_key";
+    public static final String AVG_KEY = "avg_key";
+    public static final String CUR_KEY = "cur_key";
+    public static final String CLIMB_KEY = "climb_key";
+    public static final String CAL_KEY = "cal_key";
+    public static final String DIST_KEY = "dist_key";
+
     LocationManager locationManager;
-    double lat, lng;
+    private Timer timer;
+    private double lat = 0, lng = 0, avg_speed = 0, cur_speed = 0,
+            climb = 0, calorie = 0, distance = 0, initAltitude = 0;
+    private int sec = 0;
     private Location location;
     private MapsActivity.MyMessageHandler locationServiceMsgHandler = null;
 
@@ -57,49 +64,39 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("pengze", "Service: onCreate()");
-        lat = 0;
-        lng = 0;
+        timer = new Timer();
+        CounterTask counterTask = new CounterTask();
+        timer.scheduleAtFixedRate(counterTask, 0, 1000);
         initLocationManager();
-        /*String svcName = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager) getSystemService(svcName);
-        myMessageHandler = new MyMessageHandler();
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setAltitudeRequired(true);
-        criteria.setSpeedRequired(true);
-        String provider = LocationManager.GPS_PROVIDER;
-        Log.d("pengze", "provider " + provider); // NULL
-        Location location = locationManager.getLastKnownLocation(provider);
-        locationManager.requestLocationUpdates(provider, 0, 0, locationListener);*/
+    }
+
+    public class CounterTask extends TimerTask {
+        public void run() {
+            sec++;
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("pengze", "Service: onDestroy()");
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("pengze", "Service: onBind()." + lat + "," + lng);
         return new MyBinder();
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.d("pengze", "Service: onUnbind()" + lat + "," + lng);
         return true; // false: activity can bind only once.
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("pengze", "Service onStartCommand() called: "+startId);
         return START_STICKY; // START_NOT_STICKY, START_REDELIVER_INTENT
     }
 
     public class MyBinder extends Binder {
         public void setMessageHandler(MapsActivity.MyMessageHandler msgHandler) {
-            Log.d("pengze", "Service: setMessageHandler");
             locationServiceMsgHandler = msgHandler;
             updateWithNewLocation(location);
         }
@@ -120,10 +117,7 @@ public class LocationService extends Service {
 
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            Log.d("pengze", "onLocationChanged()");
             if (location != null) {
-                lat = location.getLatitude();
-                lng = location.getLongitude();
                 updateWithNewLocation(location);
             }
         }
@@ -140,14 +134,27 @@ public class LocationService extends Service {
     };
 
     private void updateWithNewLocation(Location location) {
-        Log.d("pengze", "updateWithNewLocation()");
         if (location != null) {
+            if (lat * lng != 0)
+                distance += distance(location.getLatitude(), location.getLongitude(), lat, lng);
             lat = location.getLatitude();
             lng = location.getLongitude();
+            avg_speed = distance / sec * 3600;
+            cur_speed = location.getSpeed();
+            if (initAltitude != 0)
+                climb = location.getAltitude() - initAltitude;
+            else
+                climb = 0;
+            calorie = distance * 105;
             Log.d("pengze", "(" + lat + "," + lng + ")");
             Bundle bundle = new Bundle();
             bundle.putDouble(LAT_KEY, lat);
             bundle.putDouble(LNG_KEY, lng);
+            bundle.putDouble(AVG_KEY, avg_speed);
+            bundle.putDouble(CUR_KEY, cur_speed);
+            bundle.putDouble(CLIMB_KEY, climb);
+            bundle.putDouble(CAL_KEY, calorie);
+            bundle.putDouble(DIST_KEY, distance);
             Message message = locationServiceMsgHandler.obtainMessage();
             message.setData(bundle);
             locationServiceMsgHandler.sendMessage(message);
@@ -156,5 +163,26 @@ public class LocationService extends Service {
 
     public static LatLng fromLocationToLatLng(Location location) {
         return new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }

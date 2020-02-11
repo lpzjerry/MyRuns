@@ -33,6 +33,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ServiceConnection {
@@ -47,11 +49,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker marker = null;
     private PolylineOptions polylineOptions;
     ArrayList<Polyline> polylines;
+    private String type = "";
+    private double avg_speed = 0.0, cur_speed = 0.0, climb = 0.0, calorie = 0.0, distance = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            type = bundle.getString("activityType");
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -70,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapCentered = false;
         polylineOptions = new PolylineOptions();
         redMarkerOption = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(
-                BitmapDescriptorFactory.HUE_BLUE));
+                BitmapDescriptorFactory.HUE_RED));
         greenMarkerOption = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(
                 BitmapDescriptorFactory.HUE_GREEN));
         polylines = new ArrayList<>();
@@ -115,7 +125,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Bundle bundle = message.getData();
             double lat = bundle.getDouble(LocationService.LAT_KEY);
             double lng = bundle.getDouble(LocationService.LNG_KEY);
+            avg_speed = bundle.getDouble(LocationService.AVG_KEY);
+            cur_speed = bundle.getDouble(LocationService.CUR_KEY);
+            climb = bundle.getDouble(LocationService.CLIMB_KEY);
+            calorie = bundle.getDouble(LocationService.CAL_KEY);
+            distance = bundle.getDouble(LocationService.DIST_KEY);
             textView.setText("(" + lat + "," + lng + ")");
+            textView.setText(getTextViewContent());
             // TODO Add pin and polyline to the position
             LatLng latLng = new LatLng(lat, lng);
 
@@ -158,5 +174,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         stopService(intent);
         finish();
+    }
+
+    private String getTextViewContent() {
+        String s = "Type: " + type + "\nAvg speed: " + round(avg_speed) + " m/h\nCur speed: ";
+        if (cur_speed < 0)
+            s += "n/a";
+        else
+            s += round(cur_speed) + " m/h";
+        s += "\nClimb: " + round(climb) + " Miles\nCalorie: "
+                + round(calorie) + "\nDistance: " + round(distance) + " Miles";
+        return s;
+    }
+
+    private static String round(double value) {
+        if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
+            return Integer.toString((int) value);
+        }
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return Double.toString(bd.doubleValue());
     }
 }

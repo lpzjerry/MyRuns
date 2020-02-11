@@ -68,7 +68,11 @@ public class StartFragment extends Fragment {
                     intent = new Intent(getActivity(), RecordActivity.class);
                     intent.putExtras(bundle);
                 } else {
+                    String mActivityType = activityType.getSelectedItem().toString();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("activityType", mActivityType);
                     intent = new Intent(getActivity(), MapsActivity.class);
+                    intent.putExtras(bundle);
                 }
                 startActivity(intent);
             }
