@@ -68,7 +68,7 @@ public class StartFragment extends Fragment {
                     intent = new Intent(getActivity(), RecordActivity.class);
                     intent.putExtras(bundle);
                 } else {
-                    intent = new Intent(getActivity(), MapActivity.class);
+                    intent = new Intent(getActivity(), MapsActivity.class);
                 }
                 startActivity(intent);
             }

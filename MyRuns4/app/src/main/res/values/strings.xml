@@ -70,6 +70,7 @@
     <string name="tv_heart_rate">Heart Rate</string>
     <string name="action_delete">Delete</string>
     <string name="menu_item_delete">Delete</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
