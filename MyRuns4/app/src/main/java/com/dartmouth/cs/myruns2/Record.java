@@ -10,10 +10,10 @@ public class Record {
     private long id;
     private String type = "Running";
     private String dateAndTime = "";
-    private int duration = 0;
+    private String duration = "";
     private double distance = 0;
     private int calories = 0;
-    private int heartRate = 0;
+    private String heartRate = "0";
 
     private static String round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -49,19 +49,12 @@ public class Record {
         return dateAndTime;
     }
 
-    public void setDuration(int i) {
-        duration = i;
-    }
-
-    public int getDuration() {
-        return duration;
+    public void setDuration(String s) {
+        duration = s;
     }
 
     public String getDurationStr() {
-        if (duration == 0) {
-            return "0secs";
-        }
-        return duration + "mins 0secs";
+        return duration;
     }
 
     public void setDistance(double miles) {
@@ -92,15 +85,11 @@ public class Record {
         return calories + " cals";
     }
 
-    public void setHeartRate(int i) {
-        heartRate = i;
-    }
-
-    public int getHeartRate() {
-        return heartRate;
+    public void setHeartRate(String s) {
+        heartRate = s;
     }
 
     public String getHeartRateStr() {
-        return heartRate + " bpm";
+        return heartRate;
     }
 }

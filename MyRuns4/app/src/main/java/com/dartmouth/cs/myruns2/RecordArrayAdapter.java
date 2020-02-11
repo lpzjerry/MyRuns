@@ -26,7 +26,10 @@ public class RecordArrayAdapter extends ArrayAdapter<Record> {
         }
         TextView tvBold = (TextView) convertView.findViewById(R.id.tvBoldText);
         TextView tvNormal = (TextView) convertView.findViewById(R.id.tvNormalText);
-        tvBold.setText("Manual Entry: " + record.getType() + ", " + record.getDateAndTime());
+        String input_type = "Manual Entry: ";
+        if (record.getHeartRateStr().contains("#"))
+            input_type = "GPS: ";
+        tvBold.setText(input_type + record.getType() + ", " + record.getDateAndTime());
         tvNormal.setText(record.getDistanceStr() + ", " + record.getDurationStr());
         // Return the completed view to render on screen
         return convertView;

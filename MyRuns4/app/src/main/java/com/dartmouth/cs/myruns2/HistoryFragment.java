@@ -45,7 +45,12 @@ public class HistoryFragment extends Fragment {
                 bundle.putString("distance", record.getDistanceStr());
                 bundle.putString("calories", record.getCaloriesStr());
                 bundle.putString("heartRate", record.getHeartRateStr());
-                Intent intent = new Intent(getActivity(), DisplayEntryActivity.class);
+                Intent intent;
+                if (!record.getHeartRateStr().contains("#")) {
+                    intent = new Intent(getActivity(), DisplayEntryActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), DisplayGPSActivity.class);
+                }
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

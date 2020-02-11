@@ -51,6 +51,7 @@ public class LocationService extends Service {
     public static final String CLIMB_KEY = "climb_key";
     public static final String CAL_KEY = "cal_key";
     public static final String DIST_KEY = "dist_key";
+    public static final String DUR_KEY = "dur_key";
 
     LocationManager locationManager;
     private Timer timer;
@@ -155,6 +156,7 @@ public class LocationService extends Service {
             bundle.putDouble(CLIMB_KEY, climb);
             bundle.putDouble(CAL_KEY, calorie);
             bundle.putDouble(DIST_KEY, distance);
+            bundle.putInt(DUR_KEY, sec);
             Message message = locationServiceMsgHandler.obtainMessage();
             message.setData(bundle);
             locationServiceMsgHandler.sendMessage(message);

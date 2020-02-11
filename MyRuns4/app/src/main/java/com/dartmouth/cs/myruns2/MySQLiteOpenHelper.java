@@ -36,9 +36,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 + " integer primary key autoincrement, "
                 + COLUMN_TYPE + " text not null,"
                 + COLUMN_DATE + " text not null,"
-                + COLUMN_DURATION + " integer not null,"
+                + COLUMN_DURATION + " text not null,"
                 + COLUMN_DISTANCE + " double not null,"
-                + COLUMN_CALORIES + " integer not null,"
+                + COLUMN_CALORIES + " double not null,"
                 + COLUMN_HEART_RATE + " text not null);";
         database.execSQL(sql);
     }

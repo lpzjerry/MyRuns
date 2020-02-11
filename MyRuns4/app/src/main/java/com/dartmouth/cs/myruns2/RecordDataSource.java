@@ -28,7 +28,7 @@ public class RecordDataSource {
         mySQLiteOpenHelper.close();
     }
 
-    public Record insert(String type, String dateAndTime, int duration, double distance, int calories, int heartRate) {
+    public void insert(String type, String dateAndTime, String duration, double distance, double calories, String heartRate) {
         Log.d("pengze", "insert(): " + type + " " + dateAndTime);
         ContentValues value = new ContentValues();
         value.put(MySQLiteOpenHelper.COLUMN_TYPE, type);
@@ -42,9 +42,7 @@ public class RecordDataSource {
                 MySQLiteOpenHelper.COLUMN_ID + "=" + id,
                 null, null, null, null);
         cursor.moveToFirst();
-        Record ret = cursor2Record(cursor);
         cursor.close();
-        return ret;
     }
 
 
@@ -53,7 +51,7 @@ public class RecordDataSource {
         long recordId = cursor.getLong(0);
         String type = cursor.getString(1);
         String date = cursor.getString(2);
-        int duration = cursor.getInt(3);
+        String duration = cursor.getString(3);
         double distance = cursor.getDouble(4);
         int calories = cursor.getInt(5);
         String heartRate = cursor.getString(6);
@@ -63,7 +61,7 @@ public class RecordDataSource {
         comment.setDuration(duration);
         comment.setDistance(distance);
         comment.setCalories(calories);
-        comment.setHeartRate(Integer.parseInt(heartRate));
+        comment.setHeartRate(heartRate);
         return comment;
     }
 

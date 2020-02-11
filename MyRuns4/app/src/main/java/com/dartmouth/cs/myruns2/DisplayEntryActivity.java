@@ -48,7 +48,7 @@ public class DisplayEntryActivity extends AppCompatActivity {
 
             mDuration = bundle.getString("duration");
             editText = (EditText) findViewById(R.id.ETDuration);
-            editText.setHint(mDuration);
+            editText.setHint(mDuration+" secs");
             editText.setHintTextColor(getColor(R.color.black));
             editText.setEnabled(false);
             editText.setInputType(InputType.TYPE_NULL);

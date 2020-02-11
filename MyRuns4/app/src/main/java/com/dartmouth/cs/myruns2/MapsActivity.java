@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -35,9 +36,13 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ServiceConnection {
+
+    private RecordDataSource recordDataSource = MainActivity.recordDataSource;
+    public static Calendar calendar = Calendar.getInstance();
 
     private GoogleMap mMap;
     TextView textView;
@@ -51,6 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Polyline> polylines;
     private String type = "";
     private double avg_speed = 0.0, cur_speed = 0.0, climb = 0.0, calorie = 0.0, distance = 0.0;
+    private int sec = 0;
+    ArrayList<LatLng> positions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         greenMarkerOption = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(
                 BitmapDescriptorFactory.HUE_GREEN));
         polylines = new ArrayList<>();
+        positions = new ArrayList<>();
     }
 
 
@@ -134,7 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             textView.setText(getTextViewContent());
             // TODO Add pin and polyline to the position
             LatLng latLng = new LatLng(lat, lng);
-
+            positions.add(latLng);
             if(!mapCentered){
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
                 mMap.animateCamera(cameraUpdate);
@@ -150,11 +158,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 polylineOptions.add(latLng);
                 polylines.add(mMap.addPolyline(polylineOptions));
             }
-
         }
     }
 
     public void onClickButtonSave(View view) {
+        recordDataSource.open();
+        String date_time = calendarToString(calendar);
+        String mDuration = secToDuration(sec);
+        String heart_rate = positionToString();
+        recordDataSource.insert(type, date_time, mDuration, distance, calorie, heart_rate);
+        recordDataSource.close();
         // unbind
         if (isBind) {
             getApplicationContext().unbindService(this);
@@ -194,5 +207,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return Double.toString(bd.doubleValue());
+    }
+
+    public static String calendarToString(Calendar calendar) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss MMM d yyyy");
+        return format.format(calendar.getTime());
+    }
+
+    // helper functions
+    private String secToDuration(int second) {
+        if (second < 60)
+            return second + "secs";
+        return (second / 60) + "mins " + (second % 60) + "secs";
+    }
+
+    private String positionToString() {
+        StringBuilder ret = new StringBuilder();
+        for (LatLng position : positions) {
+            ret.append(position.latitude+","+position.longitude+";");
+        }
+        // 41,135;20,136;#1.35#2.25
+        ret.append("#").append(avg_speed).append("#").append(climb);
+        return ret.toString();
     }
 }

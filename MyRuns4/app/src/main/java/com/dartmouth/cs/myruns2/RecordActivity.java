@@ -164,7 +164,8 @@ public class RecordActivity extends AppCompatActivity implements TimePickerDialo
         // TODO save to database
         Log.d("pengze", "RecordActivity: getWritableDatabase");
         recordDataSource.open();
-        recordDataSource.insert(mType, calendarToString(calendar), mDuration, mDistance, mCalories, mHeartRate);
+        recordDataSource.insert(mType, calendarToString(calendar), Integer.toString(mDuration),
+                mDistance, mCalories, Integer.toString(mHeartRate));
         recordDataSource.close();
         finish();
     }
