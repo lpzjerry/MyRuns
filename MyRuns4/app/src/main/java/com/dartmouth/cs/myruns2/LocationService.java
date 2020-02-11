@@ -2,6 +2,10 @@ package com.dartmouth.cs.myruns2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +25,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +58,12 @@ public class LocationService extends Service {
     public static final String DIST_KEY = "dist_key";
     public static final String DUR_KEY = "dur_key";
 
+
+    // TODO notification
+    private NotificationManager notificationManager;
+    private static final int Notification_ID = 1;
+    private static final String CHANNEL_ID = "channel_id";
+
     LocationManager locationManager;
     private Timer timer;
     private double lat = 0, lng = 0, avg_speed = 0, cur_speed = 0,
@@ -69,6 +80,7 @@ public class LocationService extends Service {
         CounterTask counterTask = new CounterTask();
         timer.scheduleAtFixedRate(counterTask, 0, 1000);
         initLocationManager();
+        showNotification();
     }
 
     public class CounterTask extends TimerTask {
@@ -80,6 +92,10 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+        notificationManager.cancelAll(); // Cancel the persistent notification.
     }
 
     @Override
@@ -91,6 +107,7 @@ public class LocationService extends Service {
     public boolean onUnbind(Intent intent) {
         return true; // false: activity can bind only once.
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY; // START_NOT_STICKY, START_REDELIVER_INTENT
@@ -186,5 +203,22 @@ public class LocationService extends Service {
 
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
+    }
+
+    private void showNotification() {
+        Intent intent = new Intent(this, LocationService.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel notificationChannel = new NotificationChannel(
+                CHANNEL_ID, "channel 1", NotificationManager.IMPORTANCE_DEFAULT);
+        notificationManager.createNotificationChannel(notificationChannel);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+        builder.setContentTitle("MyRuns is tracking your location");
+        builder.setContentText("Click to check");
+        builder.setContentIntent(pendingIntent); // implements onclick show app
+        builder.setSmallIcon(R.drawable.dartmouth);
+        Notification notification = builder.build();
+        notificationManager.notify(Notification_ID, notification);
     }
 }
