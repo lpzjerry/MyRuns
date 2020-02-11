@@ -15,7 +15,7 @@ public class Record {
     private int calories = 0;
     private String heartRate = "0";
 
-    private static String round(double value, int places) {
+    public static String round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         if ((value == Math.floor(value)) && !Double.isInfinite(value)) {
             return Integer.toString((int) value);

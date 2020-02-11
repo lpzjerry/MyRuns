@@ -68,8 +68,8 @@ public class DisplayGPSActivity extends AppCompatActivity implements OnMapReadyC
             mHeartRate = bundle.getString("heartRate");
             avg_speed = getAvgSpeed(mHeartRate);
             climb = getClimb(mHeartRate);
-            String tvText = "Type: " + mActivityType + "\nAvg speed: " + avg_speed
-                    + "\nCur speed: n/a\nClimb: " + climb + " Miles\nCalorie: "
+            String tvText = "Type: " + mActivityType + "\nAvg speed: " + Record.round(avg_speed, 2)
+                    + " m/h\nCur speed: n/a\nClimb: " + Record.round(climb, 2) + " Miles\nCalorie: "
                     + mCalories + "\nDistance: " + mDistance;
             textView.setText(tvText);
             // TODO add markers and polylines
