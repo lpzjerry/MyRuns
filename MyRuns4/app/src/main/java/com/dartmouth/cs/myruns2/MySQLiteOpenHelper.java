@@ -39,7 +39,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 + COLUMN_DURATION + " integer not null,"
                 + COLUMN_DISTANCE + " double not null,"
                 + COLUMN_CALORIES + " integer not null,"
-                + COLUMN_HEART_RATE + " integer not null);";
+                + COLUMN_HEART_RATE + " text not null);";
         database.execSQL(sql);
     }
 

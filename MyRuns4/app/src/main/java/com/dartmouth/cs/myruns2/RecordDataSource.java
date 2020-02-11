@@ -56,14 +56,14 @@ public class RecordDataSource {
         int duration = cursor.getInt(3);
         double distance = cursor.getDouble(4);
         int calories = cursor.getInt(5);
-        int heartRate = cursor.getInt(6);
+        String heartRate = cursor.getString(6);
         comment.setId(recordId);
         comment.setType(type);
         comment.setDateAndTime(date);
         comment.setDuration(duration);
         comment.setDistance(distance);
         comment.setCalories(calories);
-        comment.setHeartRate(heartRate);
+        comment.setHeartRate(Integer.parseInt(heartRate));
         return comment;
     }
 
