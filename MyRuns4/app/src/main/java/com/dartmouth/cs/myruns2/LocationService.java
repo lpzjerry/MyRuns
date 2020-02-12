@@ -206,7 +206,7 @@ public class LocationService extends Service {
     }
 
     private void showNotification() {
-        Intent intent = new Intent(this, LocationService.class);
+        Intent intent = new Intent(this, MapsActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
