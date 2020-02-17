@@ -23,6 +23,7 @@ public class StartFragment extends Fragment {
     private Button BNStart;
     private Spinner activityType;
     private boolean start_manual_activity;
+    private boolean start_automatic_activity;
 
     String TAG;
 
@@ -48,8 +49,13 @@ public class StartFragment extends Fragment {
                 Log.d("TAG", input_method);
                 if (input_method.equals("Manual Entry"))
                     start_manual_activity = true;
-                else
+                else if (input_method.equals("GPS")) {
                     start_manual_activity = false;
+                    start_automatic_activity = false;
+                } else {
+                    start_manual_activity = false;
+                    start_automatic_activity = true;
+                }
             }
 
             @Override
@@ -71,6 +77,7 @@ public class StartFragment extends Fragment {
                     String mActivityType = activityType.getSelectedItem().toString();
                     Bundle bundle = new Bundle();
                     bundle.putString("activityType", mActivityType);
+                    bundle.putBoolean("inputType", start_automatic_activity);
                     intent = new Intent(getActivity(), MapsActivity.class);
                     intent.putExtras(bundle);
                 }

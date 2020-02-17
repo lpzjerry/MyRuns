@@ -41,6 +41,7 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ServiceConnection {
 
+    private boolean isAutomatic = false;
     private RecordDataSource recordDataSource = MainActivity.recordDataSource;
     public static Calendar calendar = Calendar.getInstance();
 
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             type = bundle.getString("activityType");
+            isAutomatic = bundle.getBoolean("inputType");
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
