@@ -217,7 +217,7 @@ public class LocationService extends Service {
         builder.setContentTitle("MyRuns is tracking your location");
         builder.setContentText("Click to check");
         builder.setContentIntent(pendingIntent); // implements onclick show app
-        builder.setSmallIcon(R.drawable.dartmouth);
+        builder.setSmallIcon(R.drawable.greend);
         Notification notification = builder.build();
         notificationManager.notify(Notification_ID, notification);
     }
